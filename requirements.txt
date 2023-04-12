@@ -1,0 +1,19 @@
+# int8
+bitsandbytes==0.35.0
+accelerate==0.17.1
+
+# chatglm
+protobuf>=3.19.5,<3.20.1
+transformers==4.27.1
+icetk
+cpm_kernels==1.0.11
+# torch>=1.13.1
+tensorboard
+gradio>=3.21.0
+
+# 
+datasets==2.10.1
+git+https://github.com/huggingface/peft.git
+# new version >=0.3.0.dev0
+
+tensorboard
