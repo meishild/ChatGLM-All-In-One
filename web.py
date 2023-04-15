@@ -14,11 +14,10 @@ def get_args():
     quantize_group = parser.add_mutually_exclusive_group()
     quantize_group.add_argument('--low_vram', action='store_true', help='Use 4-bit quantization')
     quantize_group.add_argument('--med_vram', action='store_true', help='Use 8-bit quantization')
-
+    
+    parser.add_argument('--lora',  default=None, help='The path of lora')
     parser.add_argument('--cpu', action='store_true', help='Use CPU')
-
     parser.add_argument('--low_ram', action='store_true', help='Use CPU (low RAM)')
-
     parser.add_argument('--port',  default=7860, help='ServerPort')
 
     return parser.parse_args()
@@ -44,9 +43,11 @@ else:
         model = model.half().cuda()
 
 model = model.eval()
-print("load model lora...")
-checkpoint_path = "output/checkpoint"
-model = PeftModel.from_pretrained(model, checkpoint_path).half()
+
+if args.lora:
+    print("load model lora...")
+    checkpoint_path = args.lora
+    model = PeftModel.from_pretrained(model, checkpoint_path).half()
 
 model = model.eval()
 
@@ -166,7 +167,7 @@ with gr.Blocks() as demo:
     with open('config.json', 'r', encoding='utf-8') as f:
         configs = json.loads(f.read())
 
-    gr.Markdown('''<h1><center>ChatGLM WebUI</center></h1>''')
+    gr.Markdown('''<h1><center>ChatGLM-6B</center></h1>''')
     #gr.Markdown('''`Max Length` 是生成文本时的长度限制，`Top P` 控制输出文本中概率最高前 p 个单词的总概率，`Temperature` 控制生成文本的多样性和随机性。<br/>`Top P` 变小会生成更多样和不相关的文本；变大会生成更保守和相关的文本。<br/>`Temperature` 变小会生成更保守和相关的文本；变大会生成更奇特和不相关的文本。<br/>`Memory Limit` 对话记忆轮数，`-1` 为无限长，限制记忆可减小显存占用。''')
 
     with gr.Row():

@@ -9,7 +9,7 @@ from streamlit import session_state
 os.environ['http_proxy'] = 'http://127.0.0.1:7890'
 os.environ["https_proxy"] = "http://127.0.0.1:7890"
 # streamlit run dataset.py --server.port 2323
-output_path = "output/dataset"
+output_path = "answers"
 data_path = output_path + "/data.pkl"
 answers_path = output_path + "/answers.json"
 

@@ -17,3 +17,5 @@ git+https://github.com/huggingface/peft.git
 # new version >=0.3.0.dev0
 
 tensorboard
+streamlit
+openai
